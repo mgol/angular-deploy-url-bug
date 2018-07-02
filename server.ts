@@ -41,8 +41,13 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
 }));
 
 // All regular routes use the Universal engine
-app.get('*', (req, res) => {
+app.get(/^[^.]*$/, (req, res) => {
   res.render('index', { req });
+});
+
+// Other routes get a 404
+app.get('*', (req, res) => {
+  res.send(404);
 });
 
 // Start up the Node server
